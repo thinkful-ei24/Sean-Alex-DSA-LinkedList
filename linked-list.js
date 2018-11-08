@@ -2,6 +2,7 @@ class _Node {
   constructor(value, next) {
     this.value = value;
     this.next = next;
+    this.visited = false;
   }
 }
 
@@ -264,15 +265,17 @@ function middle(list) {
  *
  */
 
-class CycleList {
-  constructor() {
-    this.head = null;
-  }
-}
-
 function hasCycle(list) {
   let currentNode = list.head;
-
+  while(currentNode) {
+    if(currentNode.visited) {
+      return true;
+    } else {
+      currentNode.visited = true;
+    }
+    currentNode = currentNode.next;
+  }
+  return false;
 }
 
 function main() {
@@ -297,7 +300,16 @@ function main() {
   console.log(SLL.toString());
   // console.log(third(SLL));
   console.log(middle(SLL));
-  
+
+  const cycleList = new LinkedList();
+  cycleList.insertLast('Node A');
+  cycleList.insertLast('Node B');
+  cycleList.insertLast('Node C');
+  cycleList.insertLast('Node D');
+  const nodeRef = cycleList.find('Node D');
+  nodeRef.next = cycleList.find('Node B');
+  console.log(hasCycle(SLL));
+  console.log(hasCycle(cycleList));
 }
 
 main();
