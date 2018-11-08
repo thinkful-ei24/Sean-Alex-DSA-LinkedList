@@ -86,24 +86,20 @@ class LinkedList {
     while(currNode !== null && currNode.value !== key) {
       previousNode = currNode;
       currNode = currNode.next;
-      console.log('prev:', previousNode.value);
-      console.log('curr:', currNode.value);
     }
 
     if (currNode === null)
       return false;
 
-    // create our node that points forward to the next node
+    // create our new node that points forward to the target node
     const newNode = new _Node(newVal, currNode);
 
-    // console.log('current value:', currNode.value);
-    // console.log('next node reference:', currNode.next);
-
+    // if there's no previous node, just set the start node directly
     if(currNode === previousNode) {
-      this.head = new _Node(newVal, previousNode);
+      this.head = newNode;
+    } else {
+      previousNode.next = newNode;
     }
-
-    previousNode.next = newNode;
   }
 
 }
