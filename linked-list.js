@@ -73,7 +73,56 @@ class LinkedList {
     }
     previousNode.next = currNode.next;
   }
+
+  // key is the value of the node to be matched against
+  // newVal is the value of the new element to be inserted
+  insertBefore(key, newVal) {
+    if (!this.head)
+      return false;
+
+    let currNode = this.head;
+    let previousNode = this.head;
+
+    while(currNode !== null && currNode.value !== key) {
+      previousNode = currNode;
+      currNode = currNode.next;
+      console.log('prev:', previousNode.value);
+      console.log('curr:', currNode.value);
+    }
+
+    if (currNode === null)
+      return false;
+
+    // create our node that points forward to the next node
+    const newNode = new _Node(newVal, currNode);
+
+    // console.log('current value:', currNode.value);
+    // console.log('next node reference:', currNode.next);
+
+    if(currNode === previousNode) {
+      this.head = new _Node(newVal, previousNode);
+    }
+
+    previousNode.next = newNode;
+  }
+
 }
+
+LinkedList.prototype.toString = function() {
+  let str = '';
+  let currNode = this.head;
+  while(currNode !== null) {
+    if(currNode.next !== null) {
+      str += currNode.value + ", ";
+    } else {
+      str += currNode.value;
+    }
+
+    currNode = currNode.next;
+  }
+  return str;
+};
+
 function main() {
   let SLL = new LinkedList();
   SLL.insertLast('Apollo');
@@ -81,9 +130,11 @@ function main() {
   SLL.insertLast('Hello');
   SLL.insertLast('Husker');
   SLL.insertLast('Starbuck');
-  console.log(SLL);
+  // console.log(SLL);
   SLL.insertLast('Tauhida');
   SLL.remove('squirrel');
+  SLL.insertBefore("Apollo", "new value");
+  console.log(SLL.toString());
 }
 main();
 
