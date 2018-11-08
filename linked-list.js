@@ -102,22 +102,100 @@ class LinkedList {
     }
   }
 
+  // a->b->c
+  // insert x after b: a->b->x->c
+  insertAfter(key, newVal) {
+    // check if the list is empty
+    if(!this.head) {
+      return;
+    }
+
+    let currNode = this.head;
+
+    while(currNode) {
+      // find target node
+      if(currNode.value === key) {
+        // insert after
+        currNode.next = new _Node(newVal, currNode.next);
+        return;
+      }
+      currNode = currNode.next;
+    }
+  }
+  
+  // a->b->c->d->e    insert x at index=3
+  // a->b->c->x->d->e
+  insertAt(index, newValue) {
+    if(index === 0) {
+      this.insertFirst(newValue);
+      return;
+    }
+
+    let currNode = this.head;
+    let prevNode = this.head;
+    let counter = 0;
+    while(currNode) {
+      // find target node
+      if(counter === index) {
+        prevNode.next = new _Node(newValue, currNode);
+      }
+      counter++;
+      prevNode = currNode;
+      currNode = currNode.next;
+    }
+  }
 }
 
 LinkedList.prototype.toString = function() {
-  let str = '';
+  return this.valueOf().toString();
+};
+
+LinkedList.prototype.valueOf = function() {
+  const arr = [];
   let currNode = this.head;
   while(currNode !== null) {
-    if(currNode.next !== null) {
-      str += currNode.value + ", ";
-    } else {
-      str += currNode.value;
-    }
-
+    arr.push(currNode.value);
     currNode = currNode.next;
   }
-  return str;
+  return arr;
 };
+
+function size(linkedList) {
+  let currentNode = linkedList.head;
+  let i = 0;
+  while(currentNode) {
+    i++;
+    currentNode = currentNode.next;
+  }
+  return i;
+}
+
+function isEmpty(linkedList) {
+  return linkedList.head === null;
+}
+
+function findPrevious(linkedList, targetValue) {
+  let currentNode = linkedList.head;
+  let prevNode = linkedList.head;
+  while(currentNode) {
+    if(currentNode.value === targetValue) {
+      return prevNode;
+    }
+    prevNode = currentNode;
+    currentNode = currentNode.next;
+  }
+  return null;
+}
+
+function findLast(linkedList) {
+  let currentNode = linkedList.head;
+  let prevNode = linkedList.head;
+  while(currentNode) {
+    prevNode = currentNode;
+    currentNode = currentNode.next;
+  }
+  return prevNode.value;
+}
 
 function main() {
   let SLL = new LinkedList();
@@ -129,28 +207,11 @@ function main() {
   // console.log(SLL);
   SLL.insertLast('Tauhida');
   SLL.remove('squirrel');
-  SLL.insertBefore("Apollo", "new value");
+  SLL.insertAt(0, 'x');
   console.log(SLL.toString());
+  console.log(size(SLL));
+  console.log(isEmpty(SLL));
+  console.log(findLast(SLL));
 }
+
 main();
-
-/*
-insertBefore(value of existing node, value of new node)
-if (!head)
-  return null
-
-currNode = head
-previousNode = head
-
-while(currNode !== null && currNode.value !== value of existing node )
-  previousNode = currNode
-  currNode = currNode.next
-
-if (currNode === null)
-  item not found
-
-
-previousNode.next = new Node(value of new node, currNode)
-
-
-*/
