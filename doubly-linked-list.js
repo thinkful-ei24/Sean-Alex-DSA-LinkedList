@@ -61,12 +61,15 @@ class DoubleLinkedList {
     if (current === null) return false;
 
     const newNode = new _Node(newVal, current.previous, current);
+    current.previous.next = newNode;
+    current.previous = newNode;
+    // console.log('current.previous:', current.previous);
 
-    if (current === current.previous) {
-      this.head = newNode;
-    } else {
-      current.previous.next = newNode;
-    }
+    // if (current === current.previous) {
+    //   this.head = newNode;
+    // } else {
+    //   current.previous.next = newNode;
+    // }
   }
 }
 function main() {
