@@ -228,6 +228,25 @@ function third(list) {
   return 'not found';
 }
 
+// i=0 len=1 mid=0
+// i=1 len=2 mid=1
+// i=2 len=3 mid=1
+// i=3 len=4 mid=2
+// i=4 len=5 mid=2
+function middle(list) {
+  let current = list.head;
+  let mid = list.head;
+  let i = 0;
+  while(current) {
+    if(i%2 === 1) {
+      mid = mid.next;
+    }
+    current = current.next;
+    i++;
+  }
+  return mid.value;
+}
+
 /**
  * 1->2->3
  * 1<-2<-3 or 3->2->1
@@ -245,10 +264,21 @@ function third(list) {
  *
  */
 
+class CycleList {
+  constructor() {
+    this.head = null;
+  }
+}
+
+function hasCycle(list) {
+  let currentNode = list.head;
+
+}
+
 function main() {
   let SLL = new LinkedList();
   SLL.insertLast('Apollo');
-  // SLL.insertLast('Apollo');
+  SLL.insertLast('Apollo');
   SLL.insertLast('Boomer');
   // SLL.insertLast('Boomer');
   SLL.insertLast('Hello');
@@ -258,8 +288,6 @@ function main() {
   // SLL.insertLast('Starbuck');
   // console.log(SLL);
   SLL.insertLast('Tauhida');
-  SLL.remove('squirrel');
-  SLL.insertAt(0, 'x');
   // console.log(size(SLL));
   // console.log(isEmpty(SLL));
   // console.log(findLast(SLL));
@@ -267,7 +295,9 @@ function main() {
   // console.log(SLL.toString());
   // console.log(whatDoesThisProgramDo(SLL));
   console.log(SLL.toString());
-  console.log(third(SLL));
+  // console.log(third(SLL));
+  console.log(middle(SLL));
+  
 }
 
 main();
